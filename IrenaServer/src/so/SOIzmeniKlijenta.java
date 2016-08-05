@@ -1,0 +1,38 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package so;
+
+import domen.Klijent;
+import domen.OpstiDomenskiObjekat;
+import domen.Proizvod;
+import java.util.HashMap;
+import java.util.Map;
+import util.Util;
+
+/**
+ *
+ * @author Nadin kompjuter
+ */
+public class SOIzmeniKlijenta extends OpstaSO{
+    Map<String,Object> mapaUslova;
+
+    @Override
+    protected void izvrisiKonkretnuOperaciju(OpstiDomenskiObjekat odo) throws Exception {
+              mapaUslova =  kreirajKriterijumPretrage(odo);
+             odo.setMapaUslov(mapaUslova);
+        db.DBBroker.getInstance().izmeni(odo);
+
+    }
+    
+      private Map<String, Object> kreirajKriterijumPretrage(OpstiDomenskiObjekat odo) {
+         Klijent k = (Klijent)odo;
+         mapaUslova = new HashMap<>();
+        mapaUslova.put(Util.USLOV_IZMENI_KLIJENTA, k.getKlijentID());
+
+        return mapaUslova;
+    }
+    
+}
